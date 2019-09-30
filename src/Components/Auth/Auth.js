@@ -1,4 +1,7 @@
 import React, { Component } from 'react'
+import axios from 'axios'
+import swal from 'sweetalert2'
+import {Link} from 'react-router-dom'
 
 class Auth extends Component {
     constructor(){
@@ -14,6 +17,21 @@ class Auth extends Component {
           [key]: e.target.value
         })
       }
+    
+      async register() {
+        const { username, password } = this.state
+        const res = await axios.post('/auth/register', {username, password})
+        if(res){
+        this.props.updateUser(res.data.user)
+        this.props.history.push('/dashboard');
+        swal.fire({type: 'success', text: res.data.message})}
+        else{
+            swal.fire({type: 'error', text: 'Error please try again'})
+        }
+    
+        // axios POST to /auth/register here
+      }
+
 
     render() {
         return (
@@ -29,7 +47,7 @@ class Auth extends Component {
                     type = "password"
                     placeholder = "Password"
                 />
-                <button>Register</button>
+                <Link to= '/dashboard'><button onClick={()=> this.register()}>Register</button></Link>
                 <button>Login</button>
             </div>
         )
