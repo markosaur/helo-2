@@ -1,4 +1,5 @@
 INSERT INTO users 
 (username)
-VALUES (${username})
-RETURNING id;
+VALUES 
+(${username})
+RETURNING users_id;

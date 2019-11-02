@@ -1,7 +1,18 @@
 import React, { Component } from 'react';
 import {Link} from 'react-router-dom'
+import axios from 'axios'
+import swal from 'sweetalert2';
+
 
 class Nav extends Component {
+    logout = async () =>{
+        const res = await axios.delete('/auth/logout')
+        this.props.updateUser(null)
+        swal.fire(res.data.message)
+    }
+
+
+
     render() {
 
         return (

@@ -1,14 +1,16 @@
 import React, { Component } from 'react'
 import axios from 'axios'
+import {updateUser} from '../../ducks/reducer'
+import {connect} from 'react-redux'
+
 import swal from 'sweetalert2'
-import {Link} from 'react-router-dom'
 
 class Auth extends Component {
-    constructor(){
-        super()
+    constructor(props){
+        super(props)
         this.state = {
             username: '',
-            password: ''
+            password: '',
         }
     }
 
@@ -19,21 +21,25 @@ class Auth extends Component {
       }
     
       async register() {
-        const { username, password } = this.state
+        const { username, password} = this.state
+        console.log(username, password)
+        if(username==='' || password === ''){
+            return swal.fire({type: 'error', text: 'Please complete registration form'})
+        }
         const res = await axios.post('/auth/register', {username, password})
-        if(res){
+        if(res.data.user){
         this.props.updateUser(res.data.user)
+        console.log(res.data.user)
         this.props.history.push('/dashboard');
         swal.fire({type: 'success', text: res.data.message})}
         else{
-            swal.fire({type: 'error', text: 'Error please try again'})
+            swal.fire({type: 'error', text: res.data.message})
         }
-    
-        // axios POST to /auth/register here
       }
 
 
     render() {
+        console.log(this.state)
         return (
             <div>
                 Auth
@@ -47,11 +53,12 @@ class Auth extends Component {
                     type = "password"
                     placeholder = "Password"
                 />
-                <Link to= '/dashboard'><button onClick={()=> this.register()}>Register</button></Link>
+                <button onClick={()=> this.register()}>Register</button>
                 <button>Login</button>
             </div>
         )
     }
 }
 
-export default Auth
+export default connect(null, {updateUser})(Auth)
+
