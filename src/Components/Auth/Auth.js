@@ -28,13 +28,31 @@ class Auth extends Component {
         }
         const res = await axios.post('/auth/register', {username, password})
         if(res.data.user){
-        this.props.updateUser(res.data.user)
-        console.log(res.data.user)
+        const {id, username, profile_pic} = res.data.user
+        this.props.updateUser(id, username, profile_pic)
+        console.log(id, username, profile_pic)
+        // console.log(res.data.user)
         this.props.history.push('/dashboard');
         swal.fire({type: 'success', text: res.data.message})}
         else{
             swal.fire({type: 'error', text: res.data.message})
         }
+      }
+
+      async login() {
+          const {username, password} = this.state
+          if(username==='' || password === ''){
+            return swal.fire({type: 'error', text: 'Please input username and password'})
+        }
+          const res = await axios.post('/auth/login', {username, password})
+          if(res.data.user){
+              this.props.updateUser(res.data.user)
+              this.props.history.push('/dashboard')
+              console.log(this.props.history)
+          }else{
+              swal.fire({type: 'error', text: res.data.message})
+          }
+
       }
 
 
@@ -54,7 +72,7 @@ class Auth extends Component {
                     placeholder = "Password"
                 />
                 <button onClick={()=> this.register()}>Register</button>
-                <button>Login</button>
+                <button onClick={()=> this.login()}>Login</button>
             </div>
         )
     }

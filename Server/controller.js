@@ -18,7 +18,7 @@ module.exports = {
         const hash = bcrypt.hashSync(password, salt)
         //Store the new user in the database
         const userId = await db.add_user({ username })
-        console.log('hello')
+        console.log(userId)
         db.add_hash({users_id:userId[0].users_id, hash}).catch(err => {
             console.log(err)
             return res.sendStatus(503)
@@ -26,11 +26,35 @@ module.exports = {
 
         //store the new user in sessions
         req.session.user = {
+            id: userId[0].users_id,
             username,
-            userId: userId[0].users_id
+            profile_pic: userId[0].profile_pic
         }
         console.log(req.session.user)
         res.status(201).send({message: 'Welcome', user: req.session.user, loggedIn: true})
+
+    },
+
+    async login(req, res) {
+      const db = req.app.get('db')
+      const {username, password} = req.body
+
+      //check to see if username exists
+      const user = await db.find_username(username)
+      if(!user[0]){
+        return res.status(200).send({message: 'username not found'})        
+      }
+      // compare the password with the hash in the db
+      const result = bcrypt.compareSync(password, user[0].hash)
+      if(!result) return res.status(200).send({message: 'Incorrect Password'})
+      //if they do match, add user to sessions
+      //decontruct the username and the users_id from user[0]
+      const {users_id: userId} = user[0]
+      //we are then going to use these deconstructed values to add them to req.session.user
+      res.session.user = {username, userId}
+      //now to send it back to the front end
+      res.status(200)
+      .send({message: 'Logged In', user: req.session.user, loggedIn: true})
 
     },
 
