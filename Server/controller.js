@@ -58,11 +58,10 @@ module.exports = {
 
     },
 
-
-
     logout(req, res) {
       req.session.destroy()
-      console.log(req.session.user)
-      res.status(200).send({message: 'Logged out', loggedIn: false})
+      // console.log(req.session.user)
+      res.status(200)
+      .send({message: 'Logged out'})
   }
   }

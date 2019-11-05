@@ -30,13 +30,14 @@ class Auth extends Component {
         if(res.data.user){
         const {id, username, profile_pic} = res.data.user
         this.props.updateUser(id, username, profile_pic)
-        console.log(id, username, profile_pic)
+        // console.log(this.props.user.userId)
         // console.log(res.data.user)
         this.props.history.push('/dashboard');
         swal.fire({type: 'success', text: res.data.message})}
         else{
             swal.fire({type: 'error', text: res.data.message})
         }
+        console.log(this.props.username)
       }
 
       async login() {
@@ -78,5 +79,13 @@ class Auth extends Component {
     }
 }
 
-export default connect(null, {updateUser})(Auth)
+function mapStateToProps(state) {
+    return {
+        id: state.id,
+        username: state.username,
+        profile_pic: state.profile_pic
+}
+};
+
+export default connect(mapStateToProps, {updateUser})(Auth)
 
