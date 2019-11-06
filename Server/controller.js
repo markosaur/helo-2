@@ -40,7 +40,7 @@ module.exports = {
       const {username, password} = req.body
 
       //check to see if username exists
-      const user = await db.find_username(username)
+      const user = await db.find_user(username)
       if(!user[0]){
         return res.status(200).send({message: 'username not found'})        
       }
@@ -49,9 +49,9 @@ module.exports = {
       if(!result) return res.status(200).send({message: 'Incorrect Password'})
       //if they do match, add user to sessions
       //decontruct the username and the users_id from user[0]
-      const {users_id: userId} = user[0]
+      const {users_id: userId, pic: profile_pic} = user[0]
       //we are then going to use these deconstructed values to add them to req.session.user
-      res.session.user = {username, userId}
+      req.session.user = {id:userId, username, profile_pic}
       //now to send it back to the front end
       res.status(200)
       .send({message: 'Logged In', user: req.session.user, loggedIn: true})
