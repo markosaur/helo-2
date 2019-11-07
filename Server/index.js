@@ -19,6 +19,9 @@ app.post('/auth/register', ctrl.register)
 app.post('/auth/login', ctrl.login)
 app.delete('/auth/logout', ctrl.logout)
 
+
+app.get('/api/myposts/:id', ctrl.myposts)
+
 massive(CONNECTION_STRING).then(db => {
     app.set('db', db)
     app.listen(SERVER_PORT, ()=> console.log(`${SERVER_PORT} slices of carrot cake`))

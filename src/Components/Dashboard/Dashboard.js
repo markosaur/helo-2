@@ -22,6 +22,12 @@ componentDidMount(){
 
 getPosts(){
     if(this.state.myPosts === true && this.state.isSearch === false){
+        axios.get(`/api/myposts/${this.props.id}`).then((response)=>{
+            console.log(response)
+            this.setState({
+                posts: response.data
+            })
+        })
         //need some logic and backend to get all my individual posts need to do a get for one person based on their id
     }
     //if myposts === true and is search === true{ do a get with a search according to all these words}
@@ -44,9 +50,10 @@ getPosts(){
         const mappedPosts = this.state.posts.map((post, i)=>{
             return(
                 <div>
-                    <p>{post.profile_pic}</p>
+                    <img src={post.profile_pic} alt="profile pic"/>
                     <p>{post.username}</p>
-                    <p>{post.profile}</p>
+                    <p>{post.title}</p>
+                    <img src={post.img} alt="post pic"/>
                 </div>
             )
         })
