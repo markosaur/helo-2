@@ -58,7 +58,7 @@ class Form extends Component {
                 /> 
 
                 <div>
-                    <img src={this.state.img} alt="content picture"/>  
+                    <img src={this.state.img} alt="content"/>  
                 </div>
                 <button onClick={() => this.addPost()} >Post</button>
             </div>

@@ -17,7 +17,7 @@ app.use(session({
 
 app.post('/auth/register', ctrl.register)
 app.post('/auth/login', ctrl.login)
-app.delete('/auth/logout', ctrl.logout)
+app.post('/auth/logout', ctrl.logout)
 
 
 app.get('/api/myposts/:id', ctrl.myposts)

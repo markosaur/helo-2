@@ -29,6 +29,8 @@ getPosts(){
             })
         })
         //need some logic and backend to get all my individual posts need to do a get for one person based on their id
+    } else if(this.state.myPosts === true && this.state.isSearch === true){
+        
     }
     //if myposts === true and is search === true{ do a get with a search according to all these words}
 }

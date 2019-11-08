@@ -4,6 +4,7 @@ import axios from 'axios'
 import swal from 'sweetalert2';
 import {updateUser} from '../../ducks/reducer'
 import {connect} from 'react-redux'
+import './nav.css';
 
 
 class Nav extends Component {
@@ -16,8 +17,10 @@ class Nav extends Component {
         }
     }
 
+    // componentDidMount
+
     async logout() {
-        const res = await axios.delete('/auth/logout')
+        const res = await axios.post('/auth/logout')
         const {id, username, profile_pic} = this.state
         this.props.updateUser(id, username, profile_pic)
         console.log(username)
@@ -29,8 +32,9 @@ class Nav extends Component {
     render() {
 
         return (
-            <div>
-                Nav
+            <div className = "nav">
+                Navbar
+                <img src = {this.props.profile_pic} alt = "pic of user"/>
                 <Link to='/dashboard'><button>Home</button></Link>
                 <Link to='/new'><button>New Post</button></Link>
                 <Link to='/'>

@@ -51,7 +51,7 @@ class Auth extends Component {
             const {id, username, profile_pic} = res.data.user
             this.props.updateUser(id, username, profile_pic)
             this.props.history.push('/dashboard')
-            console.log(this.props.history)
+            console.log(this.props.profile_pic)
           }else{
               swal.fire({type: 'error', text: res.data.message})
           }
