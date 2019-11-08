@@ -3,6 +3,7 @@ import axios from 'axios'
 import {updateUser} from '../../ducks/reducer'
 import {connect} from 'react-redux'
 import './dashboard.css'
+import {Link} from 'react-router-dom'
 
 class Dashboard extends Component {
     constructor(props){
@@ -74,13 +75,13 @@ resetSearch = (userId) =>{
     render() {
         const mappedPosts = this.state.posts.map((post, i)=>{
             return(
-                <div className = "mapped">
-                    <img src={post.profile_pic} alt="profile pic"/>
-                    <p>{post.username}</p>
-                    <p>{post.title}</p>
-                    <img src={post.img} alt="post pic"/>
-                    <p>{post.content}</p>
-                </div>
+                <Link to={`/post/${post.id}`}><div className = "mapped">
+                <img src={post.profile_pic} alt="profile pic"/>
+                <p>{post.username}</p>
+                <p>{post.title}</p>
+                <img src={post.img} alt="post pic"/>
+                <p>{post.content}</p>
+                </div></Link>
             )
         })
         console.log(this.state)
