@@ -116,5 +116,12 @@ module.exports = {
       res.status(500).send("This did not add the post")
       console.log(err)
     })
+  },
+  getPost: async function(req, res){
+    const { postedid } = req.params
+    const db = req.app.get('db')
+    const foundPost = await db.get_post(postedid)
+    res.status(200).send(foundPost)
   }
+  
   }

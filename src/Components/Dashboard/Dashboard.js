@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import axios from 'axios'
 import {updateUser} from '../../ducks/reducer'
 import {connect} from 'react-redux'
+import './dashboard.css'
 
 class Dashboard extends Component {
     constructor(props){
@@ -44,6 +45,19 @@ getPosts=(userId)=>{
 
 }
 
+resetSearch = (userId) =>{
+    const {myPosts} = this.state
+    axios.get(`/api/posts/${userId}?myPosts=${myPosts}`)
+    .then((response) => {
+        this.setState({
+            posts: response.data,
+            search: ''
+        })
+    }).catch((err)=>{
+        console.log(err)
+    })
+}
+
     handleChange(e, key) {
         this.setState({
           [key]: e.target.value,
@@ -60,7 +74,7 @@ getPosts=(userId)=>{
     render() {
         const mappedPosts = this.state.posts.map((post, i)=>{
             return(
-                <div>
+                <div className = "mapped">
                     <img src={post.profile_pic} alt="profile pic"/>
                     <p>{post.username}</p>
                     <p>{post.title}</p>
@@ -78,7 +92,8 @@ getPosts=(userId)=>{
                     <input
                     onChange = {e => this.handleChange(e, 'search')}
                     type= "text"
-                    placeholder = "search"  
+                    placeholder = "search" 
+                    value = {this.state.search} 
                     />
                     <input
                     type = "checkbox"
@@ -88,7 +103,7 @@ getPosts=(userId)=>{
                 </div>
 
                 <button onClick = {()=> this.getPosts(this.props.id)}>Search</button>
-                <button>Reset</button>
+                <button onClick={() => this.resetSearch(this.props.id)}>Reset</button>
 
                 {mappedPosts}
 
