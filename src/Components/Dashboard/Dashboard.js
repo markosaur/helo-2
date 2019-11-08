@@ -12,7 +12,7 @@ class Dashboard extends Component {
             myPosts: true,
             isSearch: false
         }
-        this.getPosts = this.getPosts.bind(this)
+        // this.getPosts = this.getPosts.bind(this)
     }
 
 componentDidMount(){
@@ -20,19 +20,28 @@ componentDidMount(){
     this.getPosts()
 }
 
-getPosts(){
-    if(this.state.myPosts === true && this.state.isSearch === false){
-        axios.get(`/api/myposts/${this.props.id}`).then((response)=>{
-            console.log(response)
-            this.setState({
-                posts: response.data
-            })
+getPosts=(userId)=>{
+    const {myPosts, search} =this.state
+    axios.get(`/api/myposts/${userId}?myPosts=${myPosts}&search=${search}`)
+    .then((response) => {
+        this.setState({
+            posts: response.data
         })
-        //need some logic and backend to get all my individual posts need to do a get for one person based on their id
-    } else if(this.state.myPosts === true && this.state.isSearch === true){
-        
-    }
-    //if myposts === true and is search === true{ do a get with a search according to all these words}
+    }).catch((err) => {
+        console.log(err)
+    })
+    // if(this.state.myPosts === true && this.state.isSearch === false){
+    //     axios.get(`/api/myposts/${this.props.id}`).then((response)=>{
+    //         console.log(response)
+    //         this.setState({
+    //             posts: response.data
+    //         })
+    //     })
+
+    // } else if(this.state.myPosts === true && this.state.isSearch === true){
+
+    // }
+
 }
 
     handleChange(e, key) {
@@ -78,7 +87,7 @@ getPosts(){
                     />
                 </div>
 
-                <button>Search</button>
+                <button onClick = {()=> this.getPosts(this.props.id)}>Search</button>
                 <button>Reset</button>
 
                 {mappedPosts}

@@ -80,6 +80,26 @@ module.exports = {
     }   
   },
 
+
+  search : async function(req, res){
+    const {id} = req.params
+    const {myPosts, search} = req.query
+    const db = req.app.get('db')
+    if(myPosts==='true' && search){
+      const userByTitle = await db.all_by_title(search)
+      res.status(200).send(userByTitle)
+    }else if( myPosts === 'false' && !search){
+      const allExceptUserPosts = await db.all_except_user(id)
+      res.status(200).send(allExceptUserPosts)
+    }else if(myPosts === 'false' && search){
+      const noUserByTitle = await db.no_user_by_title([id, search])
+      res.status(200).send(noUserByTitle)
+    }else if(myPosts === 'true' && !search){
+      const everything = await db.all_posts()
+      res.status(200).send(everything)
+  }
+  },
+
   new: (req, res) => {
     const db = req.app.get('db')
     const {id} = req.params

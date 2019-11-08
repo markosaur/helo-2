@@ -34,6 +34,7 @@ class Nav extends Component {
         return (
             <div className = "nav">
                 Navbar
+                <p>{this.props.username}</p>
                 <img src = {this.props.profile_pic} alt = "pic of user"/>
                 <Link to='/dashboard'><button>Home</button></Link>
                 <Link to='/new'><button>New Post</button></Link>
