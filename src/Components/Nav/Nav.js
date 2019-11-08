@@ -22,7 +22,7 @@ class Nav extends Component {
         this.props.updateUser(id, username, profile_pic)
         console.log(username)
         // this.props.history.push('/')        
-        swal.fire({type: 'success', text: res.data.message})
+        // swal.fire({type: 'success', text: res.data.message})
 
     }
 
@@ -32,7 +32,7 @@ class Nav extends Component {
             <div>
                 Nav
                 <Link to='/dashboard'><button>Home</button></Link>
-                <Link to='/post/:postid'><button>New Post</button></Link>
+                <Link to='/new'><button>New Post</button></Link>
                 <Link to='/'>
                     <button onClick={() => this.logout()}>Logout</button>
                 </Link>

@@ -1,5 +1,5 @@
 INSERT INTO users 
 (username, profile_pic)
 VALUES 
-(${username}, 'https://robohash.org/new')
+(${username}, ${profile_pic})
 RETURNING users_id, username, profile_pic ;

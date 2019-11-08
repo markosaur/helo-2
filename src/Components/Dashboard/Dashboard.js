@@ -54,6 +54,7 @@ getPosts(){
                     <p>{post.username}</p>
                     <p>{post.title}</p>
                     <img src={post.img} alt="post pic"/>
+                    <p>{post.content}</p>
                 </div>
             )
         })
