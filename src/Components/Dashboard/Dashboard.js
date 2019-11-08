@@ -16,13 +16,13 @@ class Dashboard extends Component {
     }
 
 componentDidMount(){
-    console.log('attempting to mount')
-    this.getPosts()
+    console.log('attempting to mounts')
+    this.getPosts(this.props.id)
 }
 
 getPosts=(userId)=>{
     const {myPosts, search} =this.state
-    axios.get(`/api/myposts/${userId}?myPosts=${myPosts}&search=${search}`)
+    axios.get(`/api/posts/${userId}?myPosts=${myPosts}&search=${search}`)
     .then((response) => {
         this.setState({
             posts: response.data

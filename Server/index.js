@@ -20,9 +20,9 @@ app.post('/auth/login', ctrl.login)
 app.post('/auth/logout', ctrl.logout)
 
 
-app.get('/api/myposts/:id', ctrl.myposts)
+// app.get('/api/myposts/:id', ctrl.myposts)
 app.post('/api/post/new/:id', ctrl.new)
-app.post('/api/posts/:id', ctrl.search)
+app.get('/api/posts/:id', ctrl.search)
 
 massive(CONNECTION_STRING).then(db => {
     app.set('db', db)

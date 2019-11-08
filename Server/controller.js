@@ -67,18 +67,18 @@ module.exports = {
       .send({message: 'Logged out'})
   },
 
-  myposts: async (req, res) => {
-    const db = await req.app.get('db')
-    const {id} = req.params
-    // console.log(req.params)
-    const posts = await db.get_my_posts({id})
+  // myposts: async (req, res) => {
+  //   const db = await req.app.get('db')
+  //   const {id} = req.params
+  //   // console.log(req.params)
+  //   const posts = await db.get_my_posts({id})
 
-    if(posts){
-      res.status(200).send(posts)
-    }else {
-      res.status(404).send('posts not found')
-    }   
-  },
+  //   if(posts){
+  //     res.status(200).send(posts)
+  //   }else {
+  //     res.status(404).send('posts not found')
+  //   }   
+  // },
 
 
   search : async function(req, res){
